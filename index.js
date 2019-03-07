@@ -31,6 +31,14 @@ ioServer.on('connection', function(socket) {
 	})
 })
 
+httpServer.on('upgrade', (req, socket) => {
+	// Make sure that we only handle WebSocket upgrade requests
+	if (req.headers['upgrade'] !== 'websocket') {
+		socket.end('HTTP/1.1 400 Bad Request')
+		return
+	}
+})
+
 // listen port
 httpServer.listen(port, () => {
 	console.log(`server is listening on port ${port}`)

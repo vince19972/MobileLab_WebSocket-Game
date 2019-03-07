@@ -17,6 +17,11 @@ const port = process.env.PORT || 8000
 const clientAssetsDir = path.join(__dirname, 'client/build')
 
 /*
+**-->	websocket store
+*/
+const players = {}
+
+/*
 **-->	server setup
 */
 // websocket
@@ -26,8 +31,12 @@ ioServer.on('connection', function(socket) {
 	socket.on('testing', (msg) => {
 		console.log(`testing is ${msg}`)
 	})
-	socket.on('*', (msg) => {
-		console.log(`all incoming msg is ${msg}`)
+	socket.on('*', (player, direction) => {
+		console.log(player)
+		console.log(direction)
+		players[player] = direction
+
+    socket.broadcast.emit('user joined', player, direction)
 	})
 })
 
@@ -45,10 +54,9 @@ httpServer.listen(port, () => {
 })
 
 // // serve static client side files
-// app.use(express.static(clientAssetsDir))
+app.use(express.static(clientAssetsDir))
 
 // catchall route
 app.get('*', (req, res) => {
-	// res.sendFile(path.join(clientAssetsDir, 'index.html'))
-	res.send('<h1>testing</h1>')
+	res.sendFile(path.join(clientAssetsDir, 'index.html'))
 })

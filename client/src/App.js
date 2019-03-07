@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Entry from './comps/Entry'
 import './App.css'
 
 import socket from './helpers/socket'
@@ -8,22 +9,36 @@ class App extends Component {
     super(props)
 
     this.state = {
+      players: [],
       client: socket()
     }
   }
 
-  componentDidMount() {
-    console.log('mounted')
-    // this.state.client.testing()
+  componentDidMount () {
+    this.state.client.socket.on('user joined', (player, direction) => {
+      // console.log(player)
+      // console.log(direction)
+      // console.log(this.state.players)
+
+      const userExisted = this.state.players.filter((val) =>
+        player === val.player
+      ).length > 0
+
+      if (!userExisted) {
+        this.setState({
+          players: [...this.state.players, {
+            player,
+            direction
+          }]
+        })
+      }
+    })
   }
 
   render() {
     return (
       <div className="App">
-        <h1>testing</h1>
-        <button onClick={this.state.client.testing}>
-          button
-        </button>
+        <Entry players={this.state.players}/>
       </div>
     )
   }

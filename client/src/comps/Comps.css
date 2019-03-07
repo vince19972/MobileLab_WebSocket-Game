@@ -1,0 +1,53 @@
+.name-view {
+	display: flex;
+}
+
+.name-view.-is-hidden {
+	display: none;
+}
+
+.name-input,
+.name-enter {
+	padding: 16px 40px;
+	font-size: 20px;
+		text-align: center;
+	border: 1px solid darkorange;
+}
+
+.name-enter {
+	padding-left: 24px;
+		padding-right: 24px;
+	background-color: darkorange;
+	color: white;
+	transition: .3s;
+
+	display: none;
+}
+
+.name-enter:hover {
+	cursor: pointer;
+	background-color: orange;
+	transition: .3s;
+}
+
+.name-enter.-is-active {
+	display: block;
+}
+
+.name-input {
+	color: darkorange;
+	background-color: transparent;
+}
+
+.name-input::placeholder {
+	color: darkorange;
+	opacity: .8;
+}
+
+.game-board {
+	color: orange;
+}
+
+.game-board__players {
+	display: flex;
+}

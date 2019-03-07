@@ -3,11 +3,12 @@ const io = require('socket.io-client')
 export default () => {
 	const socket = io.connect('http://localhost:8000', {reconnection: true})
 
-	const testing = () => {
-		socket.emit('testing', 'hello testing here')
+	const play = (player) => {
+		socket.emit('*', player.id, player.direction)
 	}
 
 	return {
-		testing
+		socket,
+		play
 	}
 }
